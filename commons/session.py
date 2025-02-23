@@ -12,6 +12,7 @@
 from urllib.parse import urljoin
 import logging
 import requests
+import allure
 from requests import Response, PreparedRequest
 
 
@@ -24,6 +25,7 @@ class Session(requests.Session):
         super().__init__()  # 先执行父类的初始化
         self.base_url = base_url  # 在执行子类的初始化操作
 
+    @allure.step("发送请求")
     def request(self, method, url: str, *args, **kwargs) -> Response:
         if not url.startswith("http"):
             # 自动添加baseurl
@@ -39,7 +41,7 @@ class Session(requests.Session):
 
         logger.info(f"接收响应      <<<<<< 状态码 = {resp.status_code}")
         logger.info(f"接收响应      <<<<<< 响应头 = {resp.headers}")
-        logger.info(f"接收响应      <<<<<< 响应正文 = {resp.content}")
+        logger.info(f"接收响应      <<<<<< 响应正文 = {resp.json()}")
 
         return resp
 

@@ -1,0 +1,30 @@
+title: 查询用户信息
+request:
+  method: get
+  url: http://119.91.19.171:40065/answer/api/v1/connector/info
+  headers:
+    Accept-Encoding: gzip, deflate
+    Accept-Language: zh_CN
+    Content-Type: application/json
+    Cookie: psession=33c6c2de-7e5d-40e2-9bbc-3c637a690c3f; lang=zh-CN; 3x-ui=MTcyNjU2NDcwOHxEWDhFQVFMX2dBQUJFQUVRQUFCMV80QUFBUVp6ZEhKcGJtY01EQUFLVEU5SFNVNWZWVk5GVWhoNExYVnBMMlJoZEdGaVlYTmxMMjF2WkdWc0xsVnpaWExfZ1FNQkFRUlZjMlZ5QWYtQ0FBRUVBUUpKWkFFRUFBRUlWWE5sY201aGJXVUJEQUFCQ0ZCaGMzTjNiM0prQVF3QUFRdE1iMmRwYmxObFkzSmxkQUVNQUFBQUdQLUNGUUVDQVFkNGRXa3lNREkwQVFkNGRXa3lNREkwQUE9PXwLOhLRIDjzvQ3oI-UF-GhkMheEENkxRJ8GkAZ79eFHvg==
+    Host: 119.91.19.171:40065
+    Origin: http://119.91.19.171:40065
+    Referer: http://119.91.19.171:40065/users/login
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,like
+      Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0
+extract: # 提取变量
+  reason:
+    - "json"
+    - "$.reason"
+    - 0
+
+validate:
+  # 断言 sql
+  contains: # 断言包含
+    用户在数据库中:
+      - "ltcs"
+      - ${sql(select username from user where id=1)}
+  not_contains: # 断言包含
+    用户不存在在数据库中:
+      - "ltcs"
+      - ${sql(select username from user where id=1)}

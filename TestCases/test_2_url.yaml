@@ -1,0 +1,15 @@
+title: 查询用户信息
+
+request:
+  method: get
+  url: "https://api.kuleu.com/api/action"
+  headers:
+    user-agent: 'Mozilla / 5.0(Windows NT 10.0;Win64;x64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 128.0.0.0Safari / 537.36'
+  params:
+    text: ${url_unquote(code)}
+#  data: ${code}
+extract:
+  status_code: [ json, $.data,0 ]
+
+validate:
+  codes: 200
