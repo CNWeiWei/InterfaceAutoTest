@@ -9,15 +9,19 @@
 @date: 2025/2/23 21:34
 @desc: 
 """
-base_url = 'http://127.0.0.1:8000'
-case_path = r"E:\PyP\InterfaceAutoTest\TestCases"
-exchanger = r"E:\PyP\InterfaceAutoTest\extract.yaml"
-id_path =r"E:\PyP\InterfaceAutoTest\id.yaml"
+from pathlib import Path
 
-db_host = '119.91.19.171'  # ip
+root_path = (Path(__file__)).resolve().parents[1]
+
+base_url = 'http://127.0.0.1:40065'
+case_path = rf"{root_path}\TestCases\answer"
+exchanger = rf"{root_path}\extract.yaml"
+id_path = rf"{root_path}\id.yaml"
+
+db_host = '127.0.0.1'  # ip
 db_port = 3306  # 端口
 db_user = 'root'  # 用户名
-db_password = 'mysql_hNahSe'  # 密码
+db_password = 'password'  # 密码
 db_database = 'answer'  # 库名
 
 allure_epic: str = "项目名称：answer"
@@ -26,3 +30,7 @@ allure_story: str = "默认事件（story）"
 
 rsa_public = ""
 rsa_private = ""
+
+
+if __name__ == '__main__':
+    print(root_path)

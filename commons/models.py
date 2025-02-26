@@ -72,6 +72,7 @@ class CaseInfo:
     def ddt(self) -> list:  # 返回一个列表，列表中应该包含N个注入了变量的caseInfo
         case_list = []
         if not self.parametrize:  # 没有使用数据驱动测试
+            logger.info("1，执行这一步")
             case_list.append('')
         else:  # 使用数据驱动测试
             args_name = self.parametrize[0]

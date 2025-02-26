@@ -3,3 +3,6 @@
 .venv/
 poetry.lock
 .pytest_cache/
+report
+temp
+logs

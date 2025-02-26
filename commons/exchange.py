@@ -31,15 +31,16 @@ class Exchange:
 
     @allure.step("提取变量")
     def extract(self, resp, var_name, attr, expr: str, index):
-        # resp中json是方法不是属性，需要手动更改为属性
+
         resp = copy.deepcopy(resp)
+
         try:
+            # resp中json是方法不是属性，需要手动更改为属性
             resp.json = resp.json()
         except json.decoder.JSONDecodeError:
             resp.json = {"msg": "is not json data"}
 
         data = getattr(resp, attr)
-        # print(data)
         if expr.startswith("/"):  # xpath
             res = None
         elif expr.startswith("$"):  # jsonpath
@@ -53,18 +54,20 @@ class Exchange:
         else:  # 如果没有数据
             value = "not data"
 
-        logger.debug(f"{var_name} = {value}") # 记录变量名和变量值
+        logger.debug(f"{var_name} = {value}")  # 记录变量名和变量值
 
         self.file[var_name] = value  # 保存变量
         self.file.save()  # 持久化存储到文件
+
     @allure.step("替换变量")
     def replace(self, case_info: CaseInfo):
-        ...
-
+        logger.info(case_info)
         # 1，将case_info转换为字符串
         case_info_str = case_info.to_yaml()
+        print(f"{case_info_str=}")
         # 2，替换字符串
         case_info_str = Template(case_info_str).render(self.file)
+        print(f"{case_info_str=}")
         # 3，将字符串转换成case_info
         new_case_info = case_info.by_yaml(case_info_str)
         return new_case_info
@@ -82,7 +85,7 @@ if __name__ == '__main__':
 
     # print(mock_resp.text)
     # print(mock_resp.json())
-    exchanger = Exchange(r"E:\PyP\InterfaceAutoTest\extract.yaml")
+    exchanger = Exchange(r"D:\CNWei\CNW\InterfaceAutoTest\extract.yaml")
     exchanger.extract(mock_resp, "name", "json", '$.name', 0)
     exchanger.extract(mock_resp, "age", "json", '$.age', 0)
     exchanger.extract(mock_resp, "data", "json", '$.data', 0)

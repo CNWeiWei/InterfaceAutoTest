@@ -9,8 +9,26 @@
 ...
 
 ## 环境搭建
+1，安装JAVA
+- 配置环境变量
+```text
+JAVA_HOME
+java的安装路径
+CLASSPATH
+%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar
 
-...
+添加Path
+%JAVA_HOME%\bin
+%JAVA_HOME%\jre\bin
+```
+
+2，安装allure
+- 配置环境变量
+```text
+添加Path
+allure安装目录\bin
+```
+
 
 ## 使用方法
 
