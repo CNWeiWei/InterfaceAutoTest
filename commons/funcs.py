@@ -17,7 +17,7 @@ import hashlib
 
 from commons.databases import db
 
-# from commons.files import YamlFile
+from commons.files import YamlFile
 from commons import settings
 
 logger = logging.getLogger(__name__)
@@ -53,7 +53,7 @@ def new_id():
 def last_id() -> str:
     # 不自增，只返回结果
 
-    id_file = YamlFile("id.yaml")
+    id_file = YamlFile(settings.id_path)
     return id_file["id"]
 
 
@@ -97,8 +97,5 @@ def rsa_decode(content: str) -> str:
 if __name__ == '__main__':
     # res = url_unquote("%E6%88%90%E5%8A%9F%E3%80%82")
     # print(res)
-    a = "这是中文dddddd"
-    bb = base64_encode(a)
-    print(bb)
-    cc = base64_decode(bb)
-    print(cc)
+    print(f"计数器：{new_id()}")
+    print(f"当前数值：{last_id()}")

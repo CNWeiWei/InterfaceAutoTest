@@ -14,11 +14,13 @@ import logging
 
 import allure
 import pytest
+
+from commons import settings
 from commons.files import YamlFile
 from commons.models import CaseInfo
 from commons.session import Session
 from commons.exchange import Exchange
-from commons import settings
+
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +33,6 @@ exchanger = Exchange(settings.exchanger)
 
 @allure.epic("项目名称：answer")
 class TestAPI:
-    ...
 
     @classmethod
     def find_yaml_case(cls, case_path: Path = _case_path):
@@ -41,12 +42,12 @@ class TestAPI:
         """
         yaml_path_list = case_path.glob("**/test_*.yaml")  # 搜索当前目录及其子目录下以test_开头yaml为后缀的文件
         for yaml_path in yaml_path_list:
-            # logger.info(f"load file {yaml_path=}")
+            logger.info(f"加载文件：{yaml_path}")
 
             file = YamlFile(yaml_path)  # 自动读取yaml文件
             case_info = CaseInfo(**file)  # 校验yaml格式
 
-            # logger.info(f"case_info={case_info.to_yaml()}")  # 把case_info 转成字符串，然后记录日志
+            logger.info(f"case_info={case_info.to_yaml()}")  # 把case_info 转成字符串，然后记录日志
 
             case_func = cls.new_case(case_info)  # 从yaml格式转换为pytest格式
             print(yaml_path.stem)
@@ -59,6 +60,7 @@ class TestAPI:
 
         ddt_title = [data.title for data in ddt_data]
         logger.info(f"{ddt_title=}")
+
         @allure.feature(case_info.feature)
         @allure.story(case_info.story)
         @pytest.mark.parametrize("case_info", ddt_data, ids=ddt_title)

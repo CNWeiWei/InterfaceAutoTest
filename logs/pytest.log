@@ -1,18 +1,69 @@
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.find_yaml_case:44  - load file yaml_path=WindowsPath('E:/PyP/InterfaceAutoTest/TestCases/test_1_user.yaml')'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.find_yaml_case:44  - load file yaml_path=WindowsPath('E:/PyP/InterfaceAutoTest/TestCases/test_2_url.yaml')'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.find_yaml_case:44  - load file yaml_path=WindowsPath('E:/PyP/InterfaceAutoTest/TestCases/test_3_sql.yaml')'
-''02/23/2025 10:17:34 PM' [pytest_result_log] INFO plugin.pytest_runtest_setup:122  - ---------------Start: main.py::TestAPI::test_1_user.yaml[查询用户信息0]---------------'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.test_func:67  - =================================用例开始执行：查询用户信息=================================='
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.test_func:71  - 1，正在注入变量...'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.test_func:74  - 2，正在请求接口...'
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:36  - 发送请求>>>>>> 接口地址 = GET http://119.91.19.171:40065/answer/api/v1/connector/info'
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:37  - 发送请求>>>>>> 请求头 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Accept-Language': 'zh_CN', 'Content-Type': 'application/json', 'Cookie': 'psession=33c6c2de-7e5d-40e2-9bbc-3c637a690c3f; lang=zh-CN; 3x-ui=MTcyNjU2NDcwOHxEWDhFQVFMX2dBQUJFQUVRQUFCMV80QUFBUVp6ZEhKcGJtY01EQUFLVEU5SFNVNWZWVk5GVWhoNExYVnBMMlJoZEdGaVlYTmxMMjF2WkdWc0xsVnpaWExfZ1FNQkFRUlZjMlZ5QWYtQ0FBRUVBUUpKWkFFRUFBRUlWWE5sY201aGJXVUJEQUFCQ0ZCaGMzTjNiM0prQVF3QUFRdE1iMmRwYmxObFkzSmxkQUVNQUFBQUdQLUNGUUVDQVFkNGRXa3lNREkwQVFkNGRXa3lNREkwQUE9PXwLOhLRIDjzvQ3oI-UF-GhkMheEENkxRJ8GkAZ79eFHvg==', 'Host': '119.91.19.171:40065', 'Origin': 'http://119.91.19.171:40065', 'Referer': 'http://119.91.19.171:40065/users/login'}'
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:38  - 发送请求>>>>>> 请求正文 = None '
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:42  - 接收响应      <<<<<< 状态码 = 200'
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:43  - 接收响应      <<<<<< 响应头 = {'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sun, 23 Feb 2025 14:17:34 GMT', 'Content-Length': '64'}'
-''02/23/2025 10:17:34 PM' [requests.session] INFO session.send:44  - 接收响应      <<<<<< 响应正文 = {'code': 200, 'reason': 'base.success', 'msg': '成功。', 'data': []}'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.test_func:77  - 3，正在提取变量...'
-''02/23/2025 10:17:34 PM' [commons.cases] INFO cases.test_func:83  - 4，正在断言...'
-''02/23/2025 10:17:34 PM' [commons.models] INFO models.assert_all:59  - assert 200 == code1, 状态码等于200'
-''02/23/2025 10:17:34 PM' [pytest_result_log] ERROR plugin.pytest_result_log:190  - test status is FAILED (main.py::TestAPI::test_1_user.yaml[查询用户信息0]): AssertionError'
-''02/23/2025 10:17:34 PM' [pytest_result_log] INFO plugin.pytest_runtest_teardown:128  - ----------------End: main.py::TestAPI::test_1_user.yaml[查询用户信息0]----------------'
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.find_yaml_case:45  - 加载文件：D:\CNWei\CNW\InterfaceAutoTest\TestCases\answer\test_1_status.yaml
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.find_yaml_case:50  - case_info=title: 查询状态信息
+request:
+  method: get
+  url: /answer/api/v1/connector/info
+  headers:
+    Host: 119.91.19.171:40065
+    Accept-Language: en_US
+    Accept: application/json, text/plain, */*
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+      like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0
+    Referer: http://119.91.19.171:40065/users/login
+    Accept-Encoding: gzip, deflate
+extract:
+  code:
+  - json
+  - $.code
+  - 0
+  msg:
+  - json
+  - $.msg
+  - 0
+validate:
+  equals:
+    状态码等于200:
+    - Success.
+    - ${msg}
+parametrize:
+- - title
+  - username
+  - password
+  - code
+- - 测试1
+  - user1
+  - pass1
+  - code1
+- - 测试2
+  - user2
+  - pass2
+  - code2
+- - 测试3
+  - user3
+  - pass3
+  - code3
+- - 测试4
+  - user4
+  - pass4
+  - code4
+epic: 项目名称：answer
+feature: 页面状态
+story: 状态
+
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.new_case:62  - ddt_title=['查询状态信息', '查询状态信息', '查询状态信息', '查询状态信息']
+02/28/2025 02:08:06 PM [pytest_result_log] INFO plugin.pytest_runtest_setup:122  - ----------------Start: main.py::TestAPI::test_1_status[查询状态信息0]-----------------
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:70  - =================================用例开始执行：查询状态信息==================================
+02/28/2025 02:08:06 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'code': ['json', '$.code', 0], 'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[['title', 'username', 'password', 'code'], ['测试1', 'user1', 'pass1', 'code1'], ['测试2', 'user2', 'pass2', 'code2'], ['测试3', 'user3', 'pass3', 'code3'], ['测试4', 'user4', 'pass4', 'code4']], epic='项目名称：answer', feature='页面状态', story='状态')
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:74  - 1，正在注入变量...
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:77  - 2，正在请求接口...
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:36  - 发送请求>>>>>> 接口地址 = GET http://119.91.19.171:40065/answer/api/v1/connector/info
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:37  - 发送请求>>>>>> 请求头 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json, text/plain, */*', 'Connection': 'keep-alive', 'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Referer': 'http://119.91.19.171:40065/users/login'}
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:38  - 发送请求>>>>>> 请求正文 = None 
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:42  - 接收响应      <<<<<< 状态码 = 200
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:43  - 接收响应      <<<<<< 响应头 = {'Content-Type': 'application/json; charset=utf-8', 'Date': 'Fri, 28 Feb 2025 06:08:07 GMT', 'Content-Length': '63'}
+02/28/2025 02:08:06 PM [requests.session] INFO session.send:44  - 接收响应      <<<<<< 响应正文 = {'code': 200, 'reason': 'base.success', 'msg': 'Success.', 'data': []}
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:80  - 3，正在提取变量...
+02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:86  - 4，正在断言...
+02/28/2025 02:08:06 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'code': ['json', '$.code', 0], 'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[['title', 'username', 'password', 'code'], ['测试1', 'user1', 'pass1', 'code1'], ['测试2', 'user2', 'pass2', 'code2'], ['测试3', 'user3', 'pass3', 'code3'], ['测试4', 'user4', 'pass4', 'code4']], epic='项目名称：answer', feature='页面状态', story='状态')
+02/28/2025 02:08:06 PM [pytest_result_log] ERROR plugin.pytest_result_log:190  - test status is FAILED (main.py::TestAPI::test_1_status[查询状态信息0]): TypeError
+02/28/2025 02:08:06 PM [pytest_result_log] INFO plugin.pytest_runtest_teardown:128  - -----------------End: main.py::TestAPI::test_1_status[查询状态信息0]------------------

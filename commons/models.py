@@ -10,13 +10,14 @@
 @desc: 声明yaml用例格式
 """
 import logging
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 import allure
 import yaml
 
 from commons.templates import Template
 from commons import settings
+from utils import case_validator
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class CaseInfo:
     request: dict
     extract: dict
     validate: dict
-    parametrize: list = ""
+    parametrize: list = field(default_factory=list)
     epic: str = settings.allure_epic
     feature: str = settings.allure_feature
     story: str = settings.allure_story
@@ -48,26 +49,29 @@ class CaseInfo:
 
     @allure.step("断言")
     def assert_all(self):
-        if not self.validate:
-            return
-        for assert_type, assert_value in self.validate.items():
-            for msg, data in assert_value.items():
-                a, b = data[0], data[1]
-                # print(assert_type, a, b, msg)
-                match assert_type:
-                    case 'equals':
-                        logger.info(f"assert {a} == {b}, {msg}")
-                        assert a == b, msg
-                    case 'not_equals':
-                        logger.info(f"assert {a} != {b}, {msg}")
-                        assert a != b, msg
-                    case 'contains':
-                        logger.info(f"assert {a} in {b}, {msg}")
-                        assert a in b, msg
-                    case 'not_contains':
-                        logger.info(f"assert {a} not in {b}, {msg}")
-                        assert a not in b, msg
-                # case "xxxxx
+        _validator = case_validator.CaseValidator()
+        # print(case_validator.VALIDATORS)
+        _validator.assert_all(self.validate)
+        # if not self.validate:
+        #     return
+        # for assert_type, assert_value in self.validate.items():
+        #     for msg, data in assert_value.items():
+        #         a, b = data[0], data[1]
+        #         # print(assert_type, a, b, msg)
+        #         match assert_type:
+        #             case 'equals':
+        #                 logger.info(f"assert {a} == {b}, {msg}")
+        #                 assert a == b, msg
+        #             case 'not_equals':
+        #                 logger.info(f"assert {a} != {b}, {msg}")
+        #                 assert a != b, msg
+        #             case 'contains':
+        #                 logger.info(f"assert {a} in {b}, {msg}")
+        #                 assert a in b, msg
+        #             case 'not_contains':
+        #                 logger.info(f"assert {a} not in {b}, {msg}")
+        #                 assert a not in b, msg
+        # case "xxxxx
 
     def ddt(self) -> list:  # 返回一个列表，列表中应该包含N个注入了变量的caseInfo
         case_list = []

@@ -12,9 +12,9 @@
 import logging
 
 import yaml
-from commons.models import CaseInfo
 
 logger = logging.getLogger(__name__)
+
 
 class YamlFile(dict):
     def __init__(self, path):
@@ -34,10 +34,13 @@ class YamlFile(dict):
                 dict(self),
                 stream=f,
                 allow_unicode=True,  # allow_unicode：使用unicode编码正常显示中文
-                sort_keys=False)  # sort_keys：保持原有排序
+                sort_keys=False  # sort_keys：保持原有排序
+            )
 
 
 if __name__ == '__main__':
+    from commons.models import CaseInfo
+
     yaml_path = r'E:\PyP\InterfaceAutoTest\TestCases\test_1_user.yaml'
     yaml_file = YamlFile(yaml_path)
     # yaml_file.load()

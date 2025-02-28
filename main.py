@@ -16,4 +16,4 @@ if __name__ == '__main__':
     os.system('allure generate temp -o report --clean')  # java程序只能借助操作系统执行
 
     # 3，备份日志
-    shutil.copy2("logs/pytest.log", f"logs/pytest_{now}.log")
+    # shutil.copy2("logs/pytest.log", f"logs/pytest_{now}.log")

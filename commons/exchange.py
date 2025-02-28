@@ -90,7 +90,7 @@ if __name__ == '__main__':
     exchanger.extract(mock_resp, "age", "json", '$.age', 0)
     exchanger.extract(mock_resp, "data", "json", '$.data', 0)
     exchanger.extract(mock_resp, "aaa", "json", '$.aaa', 0)
-    case_info = CaseInfo(
+    mock_case_info = CaseInfo(
         title="单元测试",
         request={
             "data":
@@ -99,5 +99,5 @@ if __name__ == '__main__':
         extract={},
         validate={}
     )
-    new_case_info = exchanger.replace(case_info)
-    print(new_case_info)
+    new_mock_case_info = exchanger.replace(mock_case_info)
+    print(new_mock_case_info)

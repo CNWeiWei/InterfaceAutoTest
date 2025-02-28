@@ -13,6 +13,7 @@ import copy
 import logging
 import re
 import string
+import inspect
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +59,7 @@ class Template(string.Template):
             func = mapping.get(func_name)  # 读取指定函数
             func_args_value = [mapping.get(arg, arg) for arg in func_args]
 
-            if func_args_value == [""]: # 处理没有参数的func
+            if func_args_value == [""]:  # 处理没有参数的func
                 func_args_value = []
 
             if not callable(func):
@@ -75,8 +76,13 @@ def hot_load():
         if func_name.startswith("_"):
             continue
         func_code = getattr(funcs, func_name)  # 取到函数对象
+        # print(func_code)
         if callable(func_code):  # 如果是一个可以调用的函数
             Template.func_mapping[func_name] = func_code  # 函数放到Template中
+    print(Template.func_mapping)
+    #     if inspect.isfunction(func_code):  # 如果是一个可以调用的函数
+    #         Template.func_mapping[func_name] = func_code  # 函数放到Template中
+    # print(Template.func_mapping)
 
 
 hot_load()
