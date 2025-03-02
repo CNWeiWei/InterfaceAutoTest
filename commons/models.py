@@ -51,9 +51,11 @@ class CaseInfo:
     def assert_all(self):
         _validator = case_validator.CaseValidator()
         # print(case_validator.VALIDATORS)
+
+        if not self.validate:
+            return
+
         _validator.assert_all(self.validate)
-        # if not self.validate:
-        #     return
         # for assert_type, assert_value in self.validate.items():
         #     for msg, data in assert_value.items():
         #         a, b = data[0], data[1]
@@ -77,12 +79,17 @@ class CaseInfo:
         case_list = []
         if not self.parametrize:  # 没有使用数据驱动测试
             logger.info("1，执行这一步")
-            case_list.append('')
+            # case_info_str = self.to_yaml()  # 转字符串
+            # case_info_str = Template(case_info_str).render(d)  # 输入变量
+            # case_info = self.by_yaml(case_info_str)  # 转成类
+            # case_list.append(case_info)
+            case_list.append(self)
         else:  # 使用数据驱动测试
             args_name = self.parametrize[0]
             args_value_list = self.parametrize[1:]
             for args_value in args_value_list:
                 d = dict(zip(args_name, args_value))
+                print(f"D的值：{d}")
                 # d 就是数据驱动测试的变量，应输入到用例中
                 case_info_str = self.to_yaml()  # 转字符串
                 case_info_str = Template(case_info_str).render(d)  # 输入变量
@@ -93,11 +100,13 @@ class CaseInfo:
 
 
 if __name__ == '__main__':
-    with open(r'E:\PyP\InterfaceAutoTest\TestCases\test_1_user.yaml', encoding='utf-8') as f:
+    with open(r'E:\PyP\InterfaceAutoTest\TestCases\answer\test_1_status.yaml', encoding='utf-8') as f:
         data = yaml.safe_load(f)
     # print(data)
     case_info = CaseInfo(**data)
     s = case_info.to_yaml()
-    print(s)
+    # print(s)
     new_case_info = case_info.by_yaml(s)
-    print(new_case_info)
+    # print(new_case_info)
+    ddt_ddt = case_info.ddt()
+    print(ddt_ddt)

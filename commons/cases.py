@@ -56,7 +56,7 @@ class TestAPI:
     @classmethod
     def new_case(cls, case_info: CaseInfo):
         ddt_data = case_info.ddt()
-        print(ddt_data)
+        print(f"测试数据：{ddt_data}")
 
         ddt_title = [data.title for data in ddt_data]
         logger.info(f"{ddt_title=}")
@@ -80,12 +80,12 @@ class TestAPI:
             logger.info(f"3，正在提取变量...")
             # 2，保存变量(接口关联)
             for var_name, extract_info in new_case_info.extract.items():
-                print(var_name, extract_info)
+                # logger.info(f"保存变量：{var_name}{extract_info}")
                 exchanger.extract(resp, var_name, *extract_info)
             # 3，断言
             logger.info(f"4，正在断言...")
             assert_case_info = exchanger.replace(case_info)  # 为断言加载变量
-            print(assert_case_info)
+            # logger.info(f"替换变量后：{assert_case_info}")
             assert_case_info.assert_all()  # 执行断言
 
             logger.info(f"用例执行结束：{case_info.title}".center(80, "="))

@@ -27,10 +27,11 @@ class CaseValidator:
 
     @classmethod
     def assert_all(cls, validate: dict):
+
         for assert_type, cases in validate.items():
-            print(f"键：{assert_type}，值：{cases}")
+            logger.info(f"键：{assert_type}，值：{cases}")
             validator = cls.VALIDATORS.get(assert_type)
-            print(f"获取到的断言：{validator}")
+            logger.info(f"获取到的断言：{validator}")
             if not validator:
                 raise KeyError(f"Unsupported validator: {assert_type}")
             for msg, (a, b) in cases.items():
@@ -74,5 +75,5 @@ if __name__ == '__main__':
     }
 
     case_validator = CaseValidator()
-    # print(case_validator.VALIDATORS)
-    case_validator.assert_all(mock_case.get("validate"))
+    print(case_validator.VALIDATORS)
+    # case_validator.assert_all(mock_case.get("validate"))

@@ -1,5 +1,5 @@
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.find_yaml_case:45  - 加载文件：D:\CNWei\CNW\InterfaceAutoTest\TestCases\answer\test_1_status.yaml
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.find_yaml_case:50  - case_info=title: 查询状态信息
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.find_yaml_case:45  - 加载文件：E:\PyP\InterfaceAutoTest\TestCases\answer\test_1_status.yaml
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.find_yaml_case:50  - case_info=title: 查询状态信息
 request:
   method: get
   url: /answer/api/v1/connector/info
@@ -12,10 +12,6 @@ request:
     Referer: http://119.91.19.171:40065/users/login
     Accept-Encoding: gzip, deflate
 extract:
-  code:
-  - json
-  - $.code
-  - 0
   msg:
   - json
   - $.msg
@@ -25,45 +21,34 @@ validate:
     状态码等于200:
     - Success.
     - ${msg}
-parametrize:
-- - title
-  - username
-  - password
-  - code
-- - 测试1
-  - user1
-  - pass1
-  - code1
-- - 测试2
-  - user2
-  - pass2
-  - code2
-- - 测试3
-  - user3
-  - pass3
-  - code3
-- - 测试4
-  - user4
-  - pass4
-  - code4
+parametrize: []
 epic: 项目名称：answer
 feature: 页面状态
 story: 状态
 
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.new_case:62  - ddt_title=['查询状态信息', '查询状态信息', '查询状态信息', '查询状态信息']
-02/28/2025 02:08:06 PM [pytest_result_log] INFO plugin.pytest_runtest_setup:122  - ----------------Start: main.py::TestAPI::test_1_status[查询状态信息0]-----------------
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:70  - =================================用例开始执行：查询状态信息==================================
-02/28/2025 02:08:06 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'code': ['json', '$.code', 0], 'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[['title', 'username', 'password', 'code'], ['测试1', 'user1', 'pass1', 'code1'], ['测试2', 'user2', 'pass2', 'code2'], ['测试3', 'user3', 'pass3', 'code3'], ['测试4', 'user4', 'pass4', 'code4']], epic='项目名称：answer', feature='页面状态', story='状态')
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:74  - 1，正在注入变量...
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:77  - 2，正在请求接口...
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:36  - 发送请求>>>>>> 接口地址 = GET http://119.91.19.171:40065/answer/api/v1/connector/info
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:37  - 发送请求>>>>>> 请求头 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json, text/plain, */*', 'Connection': 'keep-alive', 'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Referer': 'http://119.91.19.171:40065/users/login'}
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:38  - 发送请求>>>>>> 请求正文 = None 
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:42  - 接收响应      <<<<<< 状态码 = 200
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:43  - 接收响应      <<<<<< 响应头 = {'Content-Type': 'application/json; charset=utf-8', 'Date': 'Fri, 28 Feb 2025 06:08:07 GMT', 'Content-Length': '63'}
-02/28/2025 02:08:06 PM [requests.session] INFO session.send:44  - 接收响应      <<<<<< 响应正文 = {'code': 200, 'reason': 'base.success', 'msg': 'Success.', 'data': []}
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:80  - 3，正在提取变量...
-02/28/2025 02:08:06 PM [commons.cases] INFO cases.test_func:86  - 4，正在断言...
-02/28/2025 02:08:06 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'code': ['json', '$.code', 0], 'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[['title', 'username', 'password', 'code'], ['测试1', 'user1', 'pass1', 'code1'], ['测试2', 'user2', 'pass2', 'code2'], ['测试3', 'user3', 'pass3', 'code3'], ['测试4', 'user4', 'pass4', 'code4']], epic='项目名称：answer', feature='页面状态', story='状态')
-02/28/2025 02:08:06 PM [pytest_result_log] ERROR plugin.pytest_result_log:190  - test status is FAILED (main.py::TestAPI::test_1_status[查询状态信息0]): TypeError
-02/28/2025 02:08:06 PM [pytest_result_log] INFO plugin.pytest_runtest_teardown:128  - -----------------End: main.py::TestAPI::test_1_status[查询状态信息0]------------------
+03/02/2025 09:38:14 PM [commons.models] INFO models.ddt:81  - 1，执行这一步
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.new_case:62  - ddt_title=['查询状态信息']
+03/02/2025 09:38:14 PM [pytest_result_log] INFO plugin.pytest_runtest_setup:122  - -----------------Start: main.py::TestAPI::test_1_status[查询状态信息]-----------------
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:70  - =================================用例开始执行：查询状态信息==================================
+03/02/2025 09:38:14 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[], epic='项目名称：answer', feature='页面状态', story='状态')
+03/02/2025 09:38:14 PM [commons.templates] INFO templates.safe_substitute_funcs:51  - mapping更新前: {'msg': 'Success.', 'id': 12}
+03/02/2025 09:38:14 PM [commons.templates] INFO templates.safe_substitute_funcs:54  - mapping更新后: {'msg': 'Success.', 'id': 12, 'int': <class 'int'>, 'float': <class 'float'>, 'bool': <class 'bool'>, 'url_unquote': <function url_unquote at 0x000001E12866A290>, 'str': <function to_string at 0x000001E12866A320>, 'time_str': <function time_str at 0x000001E12866A3B0>, 'add': <function add at 0x000001E12866A440>, 'sql': <function sql at 0x000001E12866A4D0>, 'new_id': <function new_id at 0x000001E12866A560>, 'last_id': <function last_id at 0x000001E12866A5F0>, 'md5': <function md5 at 0x000001E12866A680>, 'base64_encode': <function base64_encode at 0x000001E12866A710>, 'base64_decode': <function base64_decode at 0x000001E12866A7A0>, 'rsa_encode': <function rsa_encode at 0x000001E12866A830>, 'rsa_decode': <function rsa_decode at 0x000001E12866A8C0>}
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:74  - 1，正在注入变量...
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:77  - 2，正在请求接口...
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:36  - 发送请求>>>>>> 接口地址 = GET http://119.91.19.171:40065/answer/api/v1/connector/info
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:37  - 发送请求>>>>>> 请求头 = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json, text/plain, */*', 'Connection': 'keep-alive', 'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Referer': 'http://119.91.19.171:40065/users/login'}
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:38  - 发送请求>>>>>> 请求正文 = None 
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:42  - 接收响应      <<<<<< 状态码 = 200
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:43  - 接收响应      <<<<<< 响应头 = {'Content-Type': 'application/json; charset=utf-8', 'Date': 'Sun, 02 Mar 2025 13:38:14 GMT', 'Content-Length': '63'}
+03/02/2025 09:38:14 PM [requests.session] INFO session.send:44  - 接收响应      <<<<<< 响应正文 = {'code': 200, 'reason': 'base.success', 'msg': 'Success.', 'data': []}
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:80  - 3，正在提取变量...
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:86  - 4，正在断言...
+03/02/2025 09:38:14 PM [commons.exchange] INFO exchange.replace:64  - CaseInfo(title='查询状态信息', request={'method': 'get', 'url': '/answer/api/v1/connector/info', 'headers': {'Host': '119.91.19.171:40065', 'Accept-Language': 'en_US', 'Accept': 'application/json, text/plain, */*', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 'Referer': 'http://119.91.19.171:40065/users/login', 'Accept-Encoding': 'gzip, deflate'}}, extract={'msg': ['json', '$.msg', 0]}, validate={'equals': {'状态码等于200': ['Success.', '${msg}']}}, parametrize=[], epic='项目名称：answer', feature='页面状态', story='状态')
+03/02/2025 09:38:14 PM [commons.templates] INFO templates.safe_substitute_funcs:51  - mapping更新前: {'msg': 'Success.', 'id': 12}
+03/02/2025 09:38:14 PM [commons.templates] INFO templates.safe_substitute_funcs:54  - mapping更新后: {'msg': 'Success.', 'id': 12, 'int': <class 'int'>, 'float': <class 'float'>, 'bool': <class 'bool'>, 'url_unquote': <function url_unquote at 0x000001E12866A290>, 'str': <function to_string at 0x000001E12866A320>, 'time_str': <function time_str at 0x000001E12866A3B0>, 'add': <function add at 0x000001E12866A440>, 'sql': <function sql at 0x000001E12866A4D0>, 'new_id': <function new_id at 0x000001E12866A560>, 'last_id': <function last_id at 0x000001E12866A5F0>, 'md5': <function md5 at 0x000001E12866A680>, 'base64_encode': <function base64_encode at 0x000001E12866A710>, 'base64_decode': <function base64_decode at 0x000001E12866A7A0>, 'rsa_encode': <function rsa_encode at 0x000001E12866A830>, 'rsa_decode': <function rsa_decode at 0x000001E12866A8C0>}
+03/02/2025 09:38:14 PM [utils.case_validator] INFO case_validator.assert_all:32  - 键：equals，值：{'状态码等于200': ['Success.', 'Success.']}
+03/02/2025 09:38:14 PM [utils.case_validator] INFO case_validator.assert_all:34  - 获取到的断言：<function validate_equals at 0x000001E12866AB00>
+03/02/2025 09:38:14 PM [utils.case_validator] INFO case_validator.validate_equals:43  - assert Success. == Success., 状态码等于200执行这段代码
+03/02/2025 09:38:14 PM [commons.cases] INFO cases.test_func:91  - =================================用例执行结束：查询状态信息==================================
+03/02/2025 09:38:14 PM [pytest_result_log] INFO plugin.pytest_result_log:190  - test status is PASSED (main.py::TestAPI::test_1_status[查询状态信息]): 
+03/02/2025 09:38:14 PM [pytest_result_log] INFO plugin.pytest_runtest_teardown:128  - ------------------End: main.py::TestAPI::test_1_status[查询状态信息]------------------

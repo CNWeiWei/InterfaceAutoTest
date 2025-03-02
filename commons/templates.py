@@ -14,13 +14,10 @@ import logging
 import re
 import string
 import inspect
+from commons.funcs import Funcs
+
 
 logger = logging.getLogger(__name__)
-
-
-def _str(s) -> str:
-    # 将数据转换为str类型。
-    return f"'{s}'"
 
 
 class Template(string.Template):
@@ -28,12 +25,12 @@ class Template(string.Template):
     1，支持函数调用
     2，参数也可以是变量
     """
-    func_mapping = {
-        "str": _str,
-        "int": int,
-        "float": float,
-        "bool": bool
-    }  # 内置函数有的，直接放入mapping；内置函数没有的，在funcs中定义，自动放入mapping
+
+    # FUNC_MAPPING = {
+    #     "int": int,
+    #     "float": float,
+    #     "bool": bool
+    # }  # 内置函数有的，直接放入mapping；内置函数没有的，在funcs中定义，自动放入mapping
 
     call_pattern = re.compile(r"\${(?P<func_name>.*?)\((?P<func_args>.*?)\)}")
 
@@ -51,8 +48,10 @@ class Template(string.Template):
         :return: 替换后的结果
         """
         mapping = copy.deepcopy(mapping)
-        mapping.update(self.func_mapping)  # 合并两个mapping
-
+        logger.info(f"mapping更新前: {mapping}")
+        # mapping.update(self.FUNC_MAPPING)  # 合并两个mapping
+        mapping.update(Funcs.FUNC_MAPPING)  # 合并两个mapping
+        logger.info(f"mapping更新后: {mapping}")
         def convert(mo):
             func_name = mo.group("func_name")
             func_args = mo.group("func_args").split(",")
@@ -70,19 +69,27 @@ class Template(string.Template):
         return self.call_pattern.sub(convert, template)
 
 
-def hot_load():
-    from commons import funcs
-    for func_name in dir(funcs):  # 遍历模块中的所有函数
-        if func_name.startswith("_"):
-            continue
-        func_code = getattr(funcs, func_name)  # 取到函数对象
-        # print(func_code)
-        if callable(func_code):  # 如果是一个可以调用的函数
-            Template.func_mapping[func_name] = func_code  # 函数放到Template中
-    print(Template.func_mapping)
-    #     if inspect.isfunction(func_code):  # 如果是一个可以调用的函数
-    #         Template.func_mapping[func_name] = func_code  # 函数放到Template中
-    # print(Template.func_mapping)
+# def hot_load():
+#     from commons import funcs
+#
+#     for func_name in dir(funcs):  # 遍历模块中的所有函数
+#         if func_name.startswith("_"):
+#             continue
+#         func_code = getattr(funcs, func_name)  # 取到函数对象
+#         # print(func_code)
+#         if callable(func_code):  # 如果是一个可以调用的函数
+#             Template.FUNC_MAPPING[func_name] = func_code  # 函数放到Template中
+#     print(Template.FUNC_MAPPING)
+#     #     if inspect.isfunction(func_code):  # 如果是一个可以调用的函数
+#     #         Template.FUNC_MAPPING[func_name] = func_code  # 函数放到Template中
+#     # print(Template.FUNC_MAPPING)
 
-
-hot_load()
+# def hot_load():
+#     from commons.funcs import Funcs
+#
+#     print(Funcs.FUNC_MAPPING)
+#     #     if inspect.isfunction(func_code):  # 如果是一个可以调用的函数
+#     #         Template.FUNC_MAPPING[func_name] = func_code  # 函数放到Template中
+#     # print(Template.FUNC_MAPPING)
+#
+# hot_load()

@@ -12,15 +12,10 @@ request:
     Referer: http://119.91.19.171:40065/users/login
     Accept-Encoding: gzip, deflate
 extract: # 提取变量
-  code:
-    - "json"
-    - "$.code"
-    - 0
   msg:
     - "json"
     - "$.msg"
     - 0
-
 
 validate:
   equals: # 断言相等
@@ -28,9 +23,9 @@ validate:
       - Success.
       - ${msg}
 
-parametrize: # 数据驱动测试
-  - [ "title","username","password","code" ] # 变量名
-  - [ "测试1","user1","pass1","code1" ] # 变量值
-  - [ "测试2","user2","pass2","code2" ] # 变量值
-  - [ "测试3","user3","pass3","code3" ] # 变量值
-  - [ "测试4","user4","pass4","code4" ] # 变量值
+#parametrize: # 数据驱动测试
+#  - [ "title","username","password","msg" ] # 变量名
+#  - [ "测试1","user1","pass1","200" ] # 变量值
+#  - [ "测试2","user2","pass2","300" ] # 变量值
+#  - [ "测试3","user3","pass3","200" ] # 变量值
+#  - [ "测试4","user4","pass4","200" ] # 变量值
