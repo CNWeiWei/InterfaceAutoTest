@@ -1,2 +1,7 @@
-msg: Success.
-id: 12
+name: 张三
+age: '18'
+data:
+- 3
+- 4
+- 5
+aaa: null

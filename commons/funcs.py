@@ -15,7 +15,7 @@ import time
 import urllib.parse
 import hashlib
 
-from commons.databases import db
+# from commons.databases import db
 
 from commons.files import YamlFile
 from commons import settings

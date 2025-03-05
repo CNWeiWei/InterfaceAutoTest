@@ -48,7 +48,8 @@ class TestAPI:
             case_info = CaseInfo(**file)  # 校验yaml格式
 
             logger.info(f"case_info={case_info.to_yaml()}")  # 把case_info 转成字符串，然后记录日志
-
+            # case_info = {yaml_path.stem:case_info}
+            # logger.info(f"case_info_dict={case_info}")
             case_func = cls.new_case(case_info)  # 从yaml格式转换为pytest格式
             print(yaml_path.stem)
             setattr(cls, f"{yaml_path.stem}", case_func)  # 把pytest格式添加到类中

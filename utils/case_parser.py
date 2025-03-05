@@ -21,6 +21,12 @@ from commons.models import CaseInfo
 class CaseParser:
     @staticmethod
     def to_yaml(case_data: dict) -> str:
+        try:
+
+            CaseInfo(**case_data)
+        except TypeError as error:
+            logging.error(error)
+            raise error
         return yaml.safe_dump(case_data, allow_unicode=True, sort_keys=False)
 
     @staticmethod
@@ -38,5 +44,5 @@ if __name__ == '__main__':
     case_parser = CaseParser()
     case_data_ = case_parser.to_yaml(data)
     # print(case_data_)
-    case_parser.from_yaml(case_data_)
+    # case_parser.from_yaml(case_data_)
     # print(type(case_data_))
