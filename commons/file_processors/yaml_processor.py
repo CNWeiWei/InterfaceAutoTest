@@ -14,12 +14,12 @@ from typing import Union
 from dataclasses import dataclass, asdict, field
 from pathlib import Path
 import yaml
-from base import BaseFileProcessor
+from commons.file_processors.base import BaseFileProcessor
 
 logger = logging.getLogger(__name__)
 
 
-class YamlFile(BaseFileProcessor,dict):
+class YamlFile(BaseFileProcessor, dict):
     """
     用于处理 YAML 文件的类，继承自 dict。
     提供了从文件加载、保存到文件、转换为字符串和从字符串转换的功能,
@@ -113,6 +113,41 @@ class YamlFile(BaseFileProcessor,dict):
                 )
         except (TypeError, OSError) as e:
             logger.error(f"保存 YAML 文件 {filepath} 时出错: {e}")
+
+
+class StringOrDict:
+    @classmethod
+    def to_string(cls, data: dict) -> str:
+        """
+        将字典 (自身) 转换为 YAML 格式的字符串。
+
+        Returns:
+            YAML 格式的字符串。
+        """
+        try:
+            return yaml.safe_dump(
+                dict(data),  # 使用dict转换为标准的字典
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False
+            )
+        except TypeError as e:
+            logger.error(f"将数据转换为 YAML 字符串时出错: {e}")
+            return ""
+
+    @classmethod
+    def to_dict(cls, data: str) -> None:
+        """
+        将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
+
+        Args:
+            data: YAML 格式的字符串。
+        """
+        try:
+            loaded_data = yaml.safe_load(data) or {}
+            return loaded_data
+        except yaml.YAMLError as e:
+            logger.error(f"将 YAML 字符串转换为字典时出错: {e}")
 
 
 if __name__ == '__main__':

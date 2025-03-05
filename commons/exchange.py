@@ -19,7 +19,7 @@ import allure
 from commons.templates import Template
 import jsonpath
 
-from commons.files import YamlFile
+from commons.file_processors.yaml_processor import YamlFile
 from commons.models import CaseInfo
 
 logger = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     # print(mock_resp.text)
     # print(mock_resp.json())
-    exchanger = Exchange(r"D:\CNWei\CNW\InterfaceAutoTest\extract.yaml")
+    exchanger = Exchange(r"E:\PyP\InterfaceAutoTest\extract.yaml")
     exchanger.extract(mock_resp, "name", "json", '$.name', 0)
     exchanger.extract(mock_resp, "age", "json", '$.age', 0)
     exchanger.extract(mock_resp, "data", "json", '$.data', 0)
