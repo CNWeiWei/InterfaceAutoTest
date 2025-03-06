@@ -19,7 +19,7 @@ import allure
 from commons.templates import Template
 import jsonpath
 
-from commons.file_processors.yaml_processor import YamlFile
+from commons.file_processors.yaml_processor import YamlFile,StringOrDict
 from commons.models import CaseInfo
 
 logger = logging.getLogger(__name__)
@@ -59,19 +59,30 @@ class Exchange:
         self.file[var_name] = value  # 保存变量
         self.file.save()  # 持久化存储到文件
 
+    # @allure.step("替换变量")
+    # def replace(self, case_info: CaseInfo):
+    #     logger.info(case_info)
+    #     # 1，将case_info转换为字符串
+    #     case_info_str = case_info.to_yaml()
+    #     print(f"{case_info_str=}")
+    #     # 2，替换字符串
+    #     case_info_str = Template(case_info_str).render(self.file)
+    #     print(f"{case_info_str=}")
+    #     # 3，将字符串转换成case_info
+    #     new_case_info = case_info.by_yaml(case_info_str)
+    #     return new_case_info
     @allure.step("替换变量")
-    def replace(self, case_info: CaseInfo):
+    def replace(self, case_info: dict):
         logger.info(case_info)
         # 1，将case_info转换为字符串
-        case_info_str = case_info.to_yaml()
+        case_info_str = StringOrDict().to_string(case_info)
         print(f"{case_info_str=}")
         # 2，替换字符串
         case_info_str = Template(case_info_str).render(self.file)
         print(f"{case_info_str=}")
         # 3，将字符串转换成case_info
-        new_case_info = case_info.by_yaml(case_info_str)
+        new_case_info =  StringOrDict().to_dict(case_info_str)
         return new_case_info
-
 
 if __name__ == '__main__':
     class MockResponse:

@@ -85,20 +85,21 @@ class TestAPI:
             item.get(case_key)
             logger.info(f"========:{item}")
             logger.info(f"========:{item.get(case_key)}")
-            # allure.dynamic.title(case_info.title)
+            allure.dynamic.title(case_info.get("title"))
 
-            logger.info(f"用例开始执行：{case_info.title}".center(80, "="))
+            logger.info(f"用例开始执行：{case_info.get('title')}".center(80, "="))
 
             # 0，变量替换
             new_case_info = exchanger.replace(case_info)
             logger.info(f"1，正在注入变量...")
-
+            logger.info(f"new_case_info={new_case_info}")
             # 1，发送请求
             logger.info(f"2，正在请求接口...")
-            resp = session.request(**new_case_info.request)
+            resp = session.request(**new_case_info.get("request"))
 
             logger.info(f"3，正在提取变量...")
             # 2，保存变量(接口关联)
+            new_case_info = CaseInfo(**new_case_info)
             for var_name, extract_info in new_case_info.extract.items():
                 # logger.info(f"保存变量：{var_name}{extract_info}")
                 exchanger.extract(resp, var_name, *extract_info)

@@ -136,7 +136,7 @@ class StringOrDict:
             return ""
 
     @classmethod
-    def to_dict(cls, data: str) -> None:
+    def to_dict(cls, data: str) -> Union[None, dict]:
         """
         将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
 

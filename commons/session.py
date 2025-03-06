@@ -41,7 +41,8 @@ class Session(requests.Session):
 
         logger.info(f"接收响应      <<<<<< 状态码 = {resp.status_code}")
         logger.info(f"接收响应      <<<<<< 响应头 = {resp.headers}")
-        logger.info(f"接收响应      <<<<<< 响应正文 = {resp.json()}")
+        logger.info(f"接收响应      <<<<<< 响应正文 = {resp.text}")
+        # logger.info(f"接收响应      <<<<<< 响应正文 = {resp.json()}")
 
         return resp
 
