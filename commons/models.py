@@ -47,15 +47,14 @@ class CaseInfo:
         obj = cls(**yaml.safe_load(yaml_str))
         return obj
 
-    @allure.step("断言")
-    def assert_all(self):
-        _validator = case_validator.CaseValidator()
-        # print(case_validator.VALIDATORS)
-
-        if not self.validate:
-            return
-
-        _validator.assert_all(self.validate)
+    # @allure.step("断言")
+    # def assert_all(self):
+    #     _validator = case_validator.CaseValidator()
+    #     # print(case_validator.VALIDATORS)
+    #
+    #
+    #
+    #     _validator.assert_all(self.validate)
         # for assert_type, assert_value in self.validate.items():
         #     for msg, data in assert_value.items():
         #         a, b = data[0], data[1]
@@ -75,28 +74,28 @@ class CaseInfo:
         #                 assert a not in b, msg
         # case "xxxxx
 
-    def ddt(self) -> list:  # 返回一个列表，列表中应该包含N个注入了变量的caseInfo
-        case_list = []
-        if not self.parametrize:  # 没有使用数据驱动测试
-            logger.info("1，执行这一步")
-            # case_info_str = self.to_yaml()  # 转字符串
-            # case_info_str = Template(case_info_str).render(d)  # 输入变量
-            # case_info = self.by_yaml(case_info_str)  # 转成类
-            # case_list.append(case_info)
-            case_list.append(self)
-        else:  # 使用数据驱动测试
-            args_name = self.parametrize[0]
-            args_value_list = self.parametrize[1:]
-            for args_value in args_value_list:
-                d = dict(zip(args_name, args_value))
-                print(f"D的值：{d}")
-                # d 就是数据驱动测试的变量，应输入到用例中
-                case_info_str = self.to_yaml()  # 转字符串
-                case_info_str = Template(case_info_str).render(d)  # 输入变量
-                case_info = self.by_yaml(case_info_str)  # 转成类
-
-                case_list.append(case_info)  # 加入到返回值
-        return case_list
+    # def ddt(self) -> list:  # 返回一个列表，列表中应该包含N个注入了变量的caseInfo
+    #     case_list = []
+    #     if not self.parametrize:  # 没有使用数据驱动测试
+    #         logger.info("1，执行这一步")
+    #         # case_info_str = self.to_yaml()  # 转字符串
+    #         # case_info_str = Template(case_info_str).render(d)  # 输入变量
+    #         # case_info = self.by_yaml(case_info_str)  # 转成类
+    #         # case_list.append(case_info)
+    #         case_list.append(self)
+    #     else:  # 使用数据驱动测试
+    #         args_name = self.parametrize[0]
+    #         args_value_list = self.parametrize[1:]
+    #         for args_value in args_value_list:
+    #             d = dict(zip(args_name, args_value))
+    #             print(f"D的值：{d}")
+    #             # d 就是数据驱动测试的变量，应输入到用例中
+    #             case_info_str = self.to_yaml()  # 转字符串
+    #             case_info_str = Template(case_info_str).render(d)  # 输入变量
+    #             case_info = self.by_yaml(case_info_str)  # 转成类
+    #
+    #             case_list.append(case_info)  # 加入到返回值
+    #     return case_list
 
 
 if __name__ == '__main__':

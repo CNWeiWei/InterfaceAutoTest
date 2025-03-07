@@ -27,7 +27,8 @@ class CaseValidator:
 
     @classmethod
     def assert_all(cls, validate: dict):
-
+        if not validate:
+            return
         for assert_type, cases in validate.items():
             logger.info(f"键：{assert_type}，值：{cases}")
             validator = cls.VALIDATORS.get(assert_type)

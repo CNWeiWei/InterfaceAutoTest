@@ -23,13 +23,15 @@ class BaseFileProcessor(abc.ABC):  # 使用 abc 模块定义抽象基类
         """加载."""
         pass
 
+    @staticmethod
     @abc.abstractmethod
-    def to_string(self) -> str:
+    def to_string(data: dict) -> str:
         """将文件内容转换为字符串。"""
         pass
 
+    @staticmethod
     @abc.abstractmethod
-    def to_dict(self, data: str) -> dict:
+    def to_dict(data: str) -> dict:
         """将文件内容转换为字典。"""
         pass
 
