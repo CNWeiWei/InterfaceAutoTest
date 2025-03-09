@@ -15,9 +15,9 @@ import time
 import urllib.parse
 import hashlib
 
-# from commons.databases import db
+from commons.databases import db
 
-from commons.files import YamlFile
+from commons.file_processors.file_handle import FileHandle
 from commons import settings
 
 logger = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ def sql(s: str) -> str:
 @Funcs.register("new_id")
 def new_id():
     #     自增，永不重复
-    id_file = YamlFile(settings.id_path)
+    id_file = FileHandle(settings.id_path)
     id_file["id"] += 1
     id_file.save()
 
@@ -76,7 +76,7 @@ def new_id():
 def last_id() -> str:
     # 不自增，只返回结果
 
-    id_file = YamlFile(settings.id_path)
+    id_file = FileHandle(settings.id_path)
     return id_file["id"]
 
 @Funcs.register("md5")

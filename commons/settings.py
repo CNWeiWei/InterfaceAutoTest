@@ -14,7 +14,7 @@ from pathlib import Path
 root_path = (Path(__file__)).resolve().parents[1]
 
 base_url = 'http://119.91.19.171:40065'
-case_path = rf"{root_path}\TestCases\answer"
+cases_dir = rf"{root_path}\TestCases\answer"
 exchanger = rf"{root_path}\extract.yaml"
 id_path = rf"{root_path}\id.yaml"
 

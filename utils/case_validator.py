@@ -77,4 +77,4 @@ if __name__ == '__main__':
 
     case_validator = CaseValidator()
     print(case_validator.VALIDATORS)
-    # case_validator.assert_all(mock_case.get("validate"))
+    case_validator.assert_all(mock_case.get("validate"))

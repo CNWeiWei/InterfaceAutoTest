@@ -1,0 +1,65 @@
+{
+    "epic": "项目名称：answer",
+    "feature": "页面状态",
+    "story": "状态",
+    "title": "查询状态信息",
+    "request": {
+        "method": "get",
+        "url": "/answer/api/v1/connector/info",
+        "headers": {
+            "Host": "119.91.19.171:40065",
+            "Accept-Language": "en_US",
+            "Accept": "application/json, text/plain, */*",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
+            "Referer": "http://119.91.19.171:40065/users/login",
+            "Accept-Encoding": "gzip, deflate"
+        }
+    },
+    "extract": {
+        "msg": [
+            "json",
+            "$.msg",
+            0
+        ]
+    },
+    "validate": {
+        "equals": {
+            "状态码等于200": [
+                "Success.",
+                "Success."
+            ]
+        }
+    },
+    "parametrize": [
+        [
+            "title",
+            "username",
+            "password",
+            "msg"
+        ],
+        [
+            "测试1",
+            "user1",
+            "pass1",
+            "200"
+        ],
+        [
+            "测试2",
+            "user2",
+            "pass2",
+            "300"
+        ],
+        [
+            "测试3",
+            "user3",
+            "pass3",
+            "200"
+        ],
+        [
+            "测试4",
+            "user4",
+            "pass4",
+            "200"
+        ]
+    ]
+}

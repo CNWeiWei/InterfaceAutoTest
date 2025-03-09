@@ -11,9 +11,8 @@
 """
 import logging
 from typing import Union
-from dataclasses import dataclass, asdict, field
 from pathlib import Path
-import yaml
+import json
 from commons.file_processors.base import BaseFileProcessor
 
 logger = logging.getLogger(__name__)
@@ -51,16 +50,17 @@ class JsonProcessor(BaseFileProcessor, dict):
         if self.filepath.exists():
             try:
                 with open(self.filepath, "r", encoding="utf-8") as f:
-                    loaded_data = yaml.safe_load(f) or {}
+                    loaded_data = json.load(f) or {}
                     self.update(loaded_data)  # 使用加载的数据更新字典
-            except yaml.YAMLError as e:
+            except json.JSONDecodeError as e:
                 logger.error(f"加载 YAML 文件 {self.filepath} 时出错: {e}")
                 # 保持字典为空 (已在开头 clear)
         else:
             logger.warning(f"文件 {self.filepath} 不存在, 字典保持为空.")
             # 保持字典为空 (已在开头 clear)
 
-    def to_string(self) -> str:
+    @staticmethod
+    def to_string(data: dict) -> str:
         """
         将字典 (自身) 转换为 YAML 格式的字符串。
 
@@ -68,17 +68,18 @@ class JsonProcessor(BaseFileProcessor, dict):
             YAML 格式的字符串。
         """
         try:
-            return yaml.safe_dump(
-                dict(self),  # 使用dict转换为标准的字典
-                allow_unicode=True,
-                sort_keys=False,
-                default_flow_style=False
+            return json.dumps(
+                dict(data),  # 使用dict转换为标准的字典
+                ensure_ascii=False,  # 允许非ASCII字符
+                # indent=4,  # 美化输出，缩进4个空格
+                sort_keys=False  # 不排序键
             )
         except TypeError as e:
-            logger.error(f"将数据转换为 YAML 字符串时出错: {e}")
+            logger.error(f"将数据转换为 JSON 字符串时出错: {e}")
             return ""
 
-    def to_dict(self, data: str) -> None:
+    @staticmethod
+    def to_dict(data: str) -> None:
         """
         将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
 
@@ -86,12 +87,10 @@ class JsonProcessor(BaseFileProcessor, dict):
             data: YAML 格式的字符串。
         """
         try:
-            loaded_data = yaml.safe_load(data) or {}
-            self.clear()
-            self.update(loaded_data)  # 清空并更新
-        except yaml.YAMLError as e:
-            logger.error(f"将 YAML 字符串转换为字典时出错: {e}")
-            self.clear()  # 出错时也清空
+            loaded_data = json.loads(data) or {}
+            return loaded_data
+        except json.JSONDecodeError as e:
+            logger.error(f"将 JSON 字符串转换为字典时出错: {e}")
 
     def save(self, new_filepath: Union[str, Path, None] = None):
         """
@@ -104,108 +103,24 @@ class JsonProcessor(BaseFileProcessor, dict):
 
         try:
             with open(filepath, "w", encoding="utf-8") as f:
-                yaml.safe_dump(
+                json.dump(
                     dict(self),  # 使用dict转换为标准的字典
-                    stream=f,
-                    allow_unicode=True,
-                    sort_keys=False,
-                    default_flow_style=False
+                    f,
+                    ensure_ascii=False,  # 允许非ASCII字符
+                    indent=4,  # 美化输出，缩进4个空格
+                    sort_keys=False  # 不排序键
                 )
         except (TypeError, OSError) as e:
-            logger.error(f"保存 YAML 文件 {filepath} 时出错: {e}")
-
-
-class StringOrDict:
-    @classmethod
-    def to_string(cls, data: dict) -> str:
-        """
-        将字典 (自身) 转换为 YAML 格式的字符串。
-
-        Returns:
-            YAML 格式的字符串。
-        """
-        try:
-            return yaml.safe_dump(
-                dict(data),  # 使用dict转换为标准的字典
-                allow_unicode=True,
-                sort_keys=False,
-                default_flow_style=False
-            )
-        except TypeError as e:
-            logger.error(f"将数据转换为 YAML 字符串时出错: {e}")
-            return ""
-
-    @classmethod
-    def to_dict(cls, data: str) -> Union[None, dict]:
-        """
-        将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
-
-        Args:
-            data: YAML 格式的字符串。
-        """
-        try:
-            loaded_data = yaml.safe_load(data) or {}
-            return loaded_data
-        except yaml.YAMLError as e:
-            logger.error(f"将 YAML 字符串转换为字典时出错: {e}")
+            logger.error(f"保存 JSON 文件 {filepath} 时出错: {e}")
 
 
 if __name__ == '__main__':
     # 示例用法
-    yaml_path = r'D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user.yaml'  # 你的 YAML 文件路径
-    yaml_file = YamlFile(yaml_path)
-    print(yaml_file)
-    print(type(yaml_file))
-
-    # # 直接像字典一样访问数据
-    # print("加载的数据:", yaml_file)  # 直接打印对象，就是打印字典内容
-    # print("title:", yaml_file.get("title"))  # 使用 get 方法
-    # if "title" in yaml_file:  # 使用 in 检查键
-    #     print("原始title:", yaml_file["title"])  # 使用方括号访问
-    #     yaml_file["title"] = "新的标题"  # 使用方括号修改
-    #     print("修改后的title:", yaml_file["title"])
-    # #
-    # yaml_file["new_key"] = "new_value"  # 添加新的键值对
-    #
-    # # 将字典转换为 YAML 字符串
-    # yaml_string = yaml_file.to_string()
-    # print("\nYAML 字符串:", yaml_string)
-    # #
-    # # 将 YAML 字符串转换回字典 (并更新 yaml_file)
-    # yaml_file.to_dict(yaml_string)
-    # print("\n从字符串加载的数据:", yaml_file)
-    #
-    # # 保存修改后的数据 (覆盖原文件)
-    # yaml_file.save()
-    #
-    # # 保存到新文件
-    # new_yaml_path = r'D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user_new.yaml'
-    # yaml_file.save(new_filepath=new_yaml_path)
-
-    # 测试从字符串初始化
-    # yaml_string2 = """
-    # name: Test User
-    # age: 30
-    # """
-
-    # yaml_file2 = YamlFile("test2.yaml", data=yaml.safe_load(yaml_string2))  # 从字符串初始化
-    # print("\n从字符串初始化的 YamlFile:", yaml_file2)
-    # yaml_file2.save()  # 保存到 test2.yaml
-    #
-    # 测试文件不存在的情形
-    # non_existent_file = YamlFile("non_existent_file.yaml")
-    # print("\n加载不存在的文件:", non_existent_file)  # 应该打印空字典 {}
-    # non_existent_file['a'] = 1  # 可以直接添加
-    # print("\n加载不存在的文件:", non_existent_file)
-
-# if __name__ == '__main__':
-#     from commons.models import CaseInfo
-#
-#     yaml_path = r'D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user.yaml'
-#     yaml_file = YamlFile(yaml_path)
-#     print(yaml_file.load())
-#     # yaml_file.load()
-#     # case_info = CaseInfo(**yaml_file)
-#     # print(case_info)
-#     # yaml_file["title"] = "查询用户信息"
-#     # yaml_file.save()
+    json_path = r'E:\PyP\InterfaceAutoTest\TestCases\test_1_user.json'  # 你的 JSON 文件路径
+    json_file = JsonProcessor(json_path)
+    print(json_file)
+    print(type(json_file))
+    json_string = JsonProcessor.to_string(json_file)
+    JsonProcessor.to_dict(json_string)
+    print(json_string)
+    json_file.save()

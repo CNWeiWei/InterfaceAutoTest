@@ -11,39 +11,36 @@
 """
 from pathlib import Path
 
-from commons.models import CaseInfo
 from commons.templates import Template
-from commons.file_processors.yaml_processor import StringOrDict
+from commons.file_processors.file_handle import FileHandle
 
 
 class DataDriver:
     @staticmethod
-    def generate_cases(file_name, case_info) -> list:
+    def generate_cases(file_name, case_info) -> dict:
 
         if not case_info.get("parametrize"):
             return {file_name + "[--]": case_info}
 
-        # cases = []
+        cases = {}
         args_names = case_info.get("parametrize")[0]
         for i, args_values in enumerate(case_info.get("parametrize")[1:]):
             # print(args_values)
             context = dict(zip(args_names, args_values))
             # print(context)
-            # rendered = Template(CaseInfo(**case_info).to_yaml()).render(context)
-            rendered = Template(StringOrDict.to_string(case_info)).render(context)
-            # cases.append({file_name + "[" + str(i) + "]": StringOrDict.to_dict(rendered)})
-            yield {file_name + "[" + str(i) + "]": StringOrDict.to_dict(rendered)}
-        # return cases
+            rendered = Template(FileHandle.to_string(case_info)).render(context)
+            cases.update({file_name + "[" + str(i) + "]": FileHandle.to_dict(rendered)})
+
+        return cases
 
 
 if __name__ == '__main__':
-    from commons.file_processors.yaml_processor import YamlProcessor
 
-    file_path = Path(r"D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user.yaml")
+    file_path = Path(r"E:\PyP\InterfaceAutoTest\TestCases\answer\test_1_status.yaml")
 
-    file_obj = YamlProcessor(file_path)
+    file_obj = FileHandle(file_path)
     print(file_path.stem)
-    file_name = file_path.stem
+    file_name_ = file_path.stem
     # mock_case_info = {
     #     "case_info0": {
     #         "feature": "页面状态",
@@ -78,24 +75,17 @@ if __name__ == '__main__':
 
     dd = DataDriver()
     # cases = dd.generate_cases(mock_case_info.get("case_info0"))
-    cases = dd.generate_cases(file_name, file_obj)
-    print(cases)
-    # print(len(cases))
-    keys_list = []
-    titles = []
-    for item in cases:
-        # print(item)
-        # 遍历列表中的每个字典
-        for key, value in item.items():
-            # print(f"key:{key}")
-            keys_list.append(key)
-            # print(f"value:{value}")
-        #     # 遍历内层字典（这里内层字典其实只有一个键值对）
-            titles.append(value['title'])
-        # print(item)
+    cases_ = dd.generate_cases(file_name_, file_obj)
+    print(cases_)
+    case_keys = list(cases_.keys())
+    case_values = cases_.values()
 
-    print(keys_list)
-    print(titles)
+    print(case_keys)
+    print(case_values)
+    aa = [i.get("title") for i in case_values]
+    print(aa)
+    # print(list(case_values)[0]["feature"])
+    print(file_obj["feature"])
+    # print(list(case_values)[0]["story"])
+    print(file_obj["story"])
 
-    # ddt_title = [data.title for data in ddt_data]
-    # logger.info(f"{ddt_title=}")

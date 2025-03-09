@@ -5,7 +5,7 @@ import pytest
 
 from commons.cases import TestAPI
 
-TestAPI.find_yaml_case()  # 加载yaml文件
+TestAPI.find_test_cases()  # 加载yaml文件
 
 if __name__ == '__main__':
     now = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')

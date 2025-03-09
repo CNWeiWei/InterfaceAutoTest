@@ -9,14 +9,16 @@
 @date: 2024 2024/9/12 21:56
 @desc: 
 """
-from urllib.parse import urljoin
 import logging
+from urllib.parse import urljoin
+
 import requests
-import allure
 from requests import Response, PreparedRequest
+import allure
 
 
-logger = logging.getLogger("requests.session")
+# logger = logging.getLogger("requests.session")
+logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 

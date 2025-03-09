@@ -60,38 +60,6 @@ class YamlProcessor(BaseFileProcessor, dict):
             logger.warning(f"文件 {self.filepath} 不存在, 字典保持为空.")
             # 保持字典为空 (已在开头 clear)
 
-    # def to_string(self) -> str:
-    #     """
-    #     将字典 (自身) 转换为 YAML 格式的字符串。
-    #
-    #     Returns:
-    #         YAML 格式的字符串。
-    #     """
-    #     try:
-    #         return yaml.safe_dump(
-    #             dict(self),  # 使用dict转换为标准的字典
-    #             allow_unicode=True,
-    #             sort_keys=False,
-    #             default_flow_style=False
-    #         )
-    #     except TypeError as e:
-    #         logger.error(f"将数据转换为 YAML 字符串时出错: {e}")
-    #         return ""
-
-    # def to_dict(self, data: str) -> None:
-    #     """
-    #     将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
-    #
-    #     Args:
-    #         data: YAML 格式的字符串。
-    #     """
-    #     try:
-    #         loaded_data = yaml.safe_load(data) or {}
-    #         self.clear()
-    #         self.update(loaded_data)  # 清空并更新
-    #     except yaml.YAMLError as e:
-    #         logger.error(f"将 YAML 字符串转换为字典时出错: {e}")
-    #         self.clear()  # 出错时也清空
     @staticmethod
     def to_string(data: dict) -> str:
         """
@@ -147,48 +115,12 @@ class YamlProcessor(BaseFileProcessor, dict):
             logger.error(f"保存 YAML 文件 {filepath} 时出错: {e}")
 
 
-class StringOrDict:
-    # @classmethod
-    # def to_string(cls, data: dict) -> str:
-    @staticmethod
-    def to_string(data: dict) -> str:
-        """
-        将字典 (自身) 转换为 YAML 格式的字符串。
 
-        Returns:
-            YAML 格式的字符串。
-        """
-        try:
-            return yaml.safe_dump(
-                dict(data),  # 使用dict转换为标准的字典
-                allow_unicode=True,
-                sort_keys=False,
-                default_flow_style=False
-            )
-        except TypeError as e:
-            logger.error(f"将数据转换为 YAML 字符串时出错: {e}")
-            return ""
-
-    # @classmethod
-    # def to_dict(cls, data: str) -> Union[None, dict]:
-    @staticmethod
-    def to_dict(data: str) -> Union[None, dict]:
-        """
-        将 YAML 格式的字符串转换为字典，并更新当前字典的内容.
-
-        Args:
-            data: YAML 格式的字符串。
-        """
-        try:
-            loaded_data = yaml.safe_load(data) or {}
-            return loaded_data
-        except yaml.YAMLError as e:
-            logger.error(f"将 YAML 字符串转换为字典时出错: {e}")
 
 
 if __name__ == '__main__':
     # 示例用法
-    yaml_path = r'D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user.yaml'  # 你的 YAML 文件路径
+    yaml_path = r'E:\PyP\InterfaceAutoTest\TestCases\answer\test_1_status.yaml'  # 你的 YAML 文件路径
     yaml_file = YamlProcessor(yaml_path)
     print(yaml_file)
     print(type(yaml_file))
@@ -234,14 +166,3 @@ if __name__ == '__main__':
     # non_existent_file['a'] = 1  # 可以直接添加
     # print("\n加载不存在的文件:", non_existent_file)
 
-# if __name__ == '__main__':
-#     from commons.models import CaseInfo
-#
-#     yaml_path = r'D:\CNWei\CNW\InterfaceAutoTest\TestCases\test_1_user.yaml'
-#     yaml_file = YamlFile(yaml_path)
-#     print(yaml_file.load())
-#     # yaml_file.load()
-#     # case_info = CaseInfo(**yaml_file)
-#     # print(case_info)
-#     # yaml_file["title"] = "查询用户信息"
-#     # yaml_file.save()
