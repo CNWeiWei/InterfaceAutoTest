@@ -17,6 +17,7 @@ pymysql = "^1.1.1"
 pytest-result-log = "^1.2.2"
 allure-pytest = "^2.13.5"
 cryptography = "^44.0.2"
+dotenv = "^0.9.9"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

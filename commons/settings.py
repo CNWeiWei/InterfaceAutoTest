@@ -22,6 +22,8 @@ cases_dir = rf"{root_path}\TestCases\answer"
 exchanger = rf"{root_path}\extract.yaml"
 id_path = rf"{root_path}\id.yaml"
 
+test_suffix = "yaml"
+
 db_host = os.getenv("DB_HOST")  # ip
 db_port = os.getenv("DB_PORT")  # 端口
 db_user = os.getenv("DB_USER")  # 用户名

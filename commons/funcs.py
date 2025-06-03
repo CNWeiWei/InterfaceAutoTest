@@ -17,7 +17,7 @@ import hashlib
 
 from commons.databases import db
 
-from commons.file_processors.file_handle import FileHandle
+from commons.file_processors.processor_factory import get_processor_class
 from commons import settings
 
 logger = logging.getLogger(__name__)
@@ -72,19 +72,21 @@ def sql(s: str) -> str:
 @Funcs.register("new_id")
 def new_id():
     #     自增，永不重复
-    id_file = FileHandle(settings.id_path)
-    id_file["id"] += 1
-    id_file.save()
+    id_file = get_processor_class(settings.id_path)
+    data = id_file.load()
+    data["id"] += 1
+    id_file.save(data)
 
-    return id_file["id"]
+    return data["id"]
 
 
 @Funcs.register("last_id")
 def last_id() -> str:
     # 不自增，只返回结果
 
-    id_file = FileHandle(settings.id_path)
-    return id_file["id"]
+    id_file = get_processor_class(settings.id_path)
+    data = id_file.load()
+    return data["id"]
 
 
 @Funcs.register("md5")
@@ -127,9 +129,12 @@ def rsa_encode(content: str) -> str:
 @Funcs.register("rsa_decode")
 def rsa_decode(content: str) -> str:
     ...
+
+
 @Funcs.register()
 def func_name_test():
     ...
+
 
 if __name__ == '__main__':
     # res = url_unquote("%E6%88%90%E5%8A%9F%E3%80%82")

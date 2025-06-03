@@ -18,17 +18,18 @@ import jsonpath
 import allure
 
 from commons.templates import Template
-from commons.file_processors.file_handle import FileHandle
+from commons.file_processors.processor_factory import get_processor_class
+from tests.b import TestCaseHandle
 
 logger = logging.getLogger(__name__)
 
 
 class Exchange:
     def __init__(self, path):
-        self.file = FileHandle(path)
+        self.file = get_processor_class(path)
 
     @allure.step("提取变量")
-    def extract(self, resp, var_name, attr, expr: str, index):
+    def extract(self, resp, var_name, attr, expr: str, index) -> None:
 
         resp = copy.deepcopy(resp)
 
@@ -53,21 +54,22 @@ class Exchange:
             value = "not data"
 
         logger.debug(f"{var_name} = {value}")  # 记录变量名和变量值
-
-        self.file[var_name] = value  # 保存变量
-        self.file.save()  # 持久化存储到文件
+        data = self.file.load()
+        data[var_name] = value  # 保存变量
+        self.file.save(data)  # 持久化存储到文件
 
     @allure.step("替换变量")
     def replace(self, case_info: dict) -> dict:
         logger.info(f"变量替换：{case_info}")
         # 1，将case_info转换为字符串
-        case_info_str = FileHandle.to_string(case_info)
+        data = TestCaseHandle(**case_info)
+        case_info_str = data.to_string()
         print(f"{case_info_str=}")
         # 2，替换字符串
-        case_info_str = Template(case_info_str).render(self.file)
+        case_info_str = Template(case_info_str).render(self.file.load())
         print(f"{case_info_str=}")
         # 3，将字符串转换成case_info
-        new_case_info = FileHandle.to_dict(case_info_str)
+        new_case_info = data.to_dict(case_info_str)
         return new_case_info
 
 

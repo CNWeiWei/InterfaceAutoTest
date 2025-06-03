@@ -33,13 +33,13 @@ class DBServer:
 
 db = DBServer(
     host=settings.db_host,  # ip
-    port=3306,  # 端口
-    user='root',  # 用户名
-    password='mysql_hNahSe',  # 密码
-    database='answer'  # 库名
+    port=settings.db_port,  # 端口
+    user=settings.db_user,  # 用户名
+    password=settings.db_password,  # 密码
+    database=settings.db_database  # 库名
 )
 
 if __name__ == '__main__':
     ...
-    res = db.execute_sql('select username from user where id=1;')
-    print(res[0])
+    # res = db.execute_sql('select username from user where id=1;')
+    # print(res[0])
